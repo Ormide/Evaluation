@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluation_JS_4</title>
+</head>
+<body>
+    <label for="PrixUnitaire" id="labelPU">Prix Unitaire :</label><input id="PrixUnitaire">
+    <label for="Quantité" id="labelQT">Quantité :</label><input id="Quantité">
+    <button id="Button_Envoyer">Envoyer</button>
+    <p id="erreur"></p>
+    <p id="pPU"></p>
+    <p id="pQT"></p>
+    <p id="pREM"></p>
+    <p id="pTOT"></p>
+    <p id="pPORT"></p>
+    <p id="pPAP"></p>
+
+
+    <script>
+        let PU;
+        let QTECOM;
+        let PAP;
+        let REM;
+        let REM_pourcentage;
+        let PORT;
+        let TOT;
+        let reg = RegExp('^[0-9]*$');
+
+        function calculeprix() {
+            // Supprime le message d'erreur si il y a
+            document.getElementById('erreur').innerHTML = '';
+            // Calcule du total avant remise et transport
+            TOT = PU*QTECOM;
+            // Calcule de la remise
+            if (TOT >= 100 && TOT <= 200) {
+                REM = (TOT/100)*5;
+                REM_pourcentage = '5%';
+            }
+            else if (TOT > 200) {
+                REM = (TOT/100)*10;
+                REM_pourcentage = '10%';
+            }
+            else {
+                REM = 0;
+                REM_pourcentage = '0%'
+            }
+            // Calcule du transport
+            if ((TOT - REM) >= 500) {
+                PORT = 0;
+            }
+            else {
+                PORT = ((TOT - REM)/100)*2;
+                if (PORT < 6) {
+                    PORT = 6;
+            }
+            }
+            // Calcule du prix à payer
+            PAP = TOT - REM + PORT;
+            // Affiche le résultat
+            document.getElementById('pPU').innerHTML = 'Prix unitaire : ' + PU + ' €';
+            document.getElementById('pQT').innerHTML = 'Quantité : ' + QTECOM;
+            document.getElementById('pTOT').innerHTML = 'Total : ' + (TOT - REM) + ' €';
+            document.getElementById('pREM').innerHTML = 'Remise ' + REM_pourcentage + ' : ' + REM + ' €';
+            document.getElementById('pPORT').innerHTML = 'Transort : ' + PORT + ' €';
+            document.getElementById('pPAP').innerHTML = 'Prix à Payer : ' + PAP.toFixed(2) + ' €';
+        }
+
+        // Fonction du button "Envoyer"
+        document.getElementById('Button_Envoyer').addEventListener('click', function() {
+            PU = document.getElementById('PrixUnitaire').value;
+            QTECOM = document.getElementById('Quantité').value;
+            // Supprime le résultat précédent (en cas d'erreur)
+            document.getElementById('pPU').innerHTML = '';
+            document.getElementById('pQT').innerHTML = '';
+            document.getElementById('pTOT').innerHTML = '';
+            document.getElementById('pREM').innerHTML = '';
+            document.getElementById('pPORT').innerHTML = '';
+            document.getElementById('pPAP').innerHTML = '';
+            // Vérifie que les input soit des nombres et supérieur à "0"
+            if (reg.test(PU) == true && reg.test(QTECOM) == true) {
+                if (PU > 0 && QTECOM > 0) {
+                    calculeprix();
+                }else {
+                    document.getElementById('erreur').innerHTML = 'Les valeurs saisies doivent être supérieur à \"O\"';
+                }
+            }
+            else {
+                document.getElementById('erreur').innerHTML = 'Les valeurs saisies sont invalide';
+            }
+        })
+
+
+
+
+    </script>
+</body>
+</html>

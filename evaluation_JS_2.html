@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluation_JS_2</title>
+</head>
+<body>
+    <!-- Saisie de la table -->
+    <label for="input">Quelle table voulez-vous afficher ? </label><input id="input" type="number" value=""><button id="button">Envoyer</button>
+    <!-- Affichage de la table -->
+    <p id="titre" ></p>
+    <p id="1"></p>
+    <p id="2"></p>
+    <p id="3"></p>
+    <p id="4"></p>
+    <p id="5"></p>
+    <p id="6"></p>
+    <p id="7"></p>
+    <p id="8"></p>
+    <p id="9"></p>
+    <p id="10"></p>
+
+    <script>
+        //Fonction pour établir la table avec "x" comme parametre
+        function tabledemultiplication(x){            
+            document.getElementById('titre').innerHTML = "Table de " + x;
+            for (i=1; i<11; i++) {
+                document.getElementById(i).innerHTML = i + " * " + x + " = " + i * x;
+            }
+        }
+        //Appel de la fonction lors du clic sur le button avec la valeur m en parametre
+        document.getElementById('button').addEventListener('click', function(){
+            let m = document.getElementById('input').value;
+            tabledemultiplication(m);
+        })
+    </script>
+</body>
+</html>

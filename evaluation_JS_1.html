@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluation_JS_1</title>
+</head>
+<body>
+    <label id='label' for="input">Âge n°1: </label><input id="input"><button id="button">Envoyer</button>
+    <p id="message"></p>
+    <p id="moins_vingt"></p>
+    <p id="vingt_quarrante"></p>
+    <p id="plus_quarrante"></p>
+
+    <script>
+        let moins_vingt = Array();
+        let vingt_quarrante = Array();
+        let plus_quarrante = Array();
+        let centenaire = false;
+        let age_nb = 1;
+        let reg = RegExp('^[1-9][0-9]?[0-9]?$')
+
+        function age_check() {
+            let age = document.getElementById('input').value;
+            
+            if (age == "") {    // Vérifie qu'un âge est saisie
+                document.getElementById('message').innerHTML = ('Veuillez saisir un âge.');
+                document.getElementById('input').value = ('');  
+            }
+            else if (reg.test(age) == false || age > 125) {    // Vérifie que l'âge saisie est valide et inférieur à 125
+                document.getElementById('message').innerHTML = ('Veuillez saisir un âge valide.');
+                document.getElementById('input').value = ('');
+            }
+            else {
+                document.getElementById('message').innerHTML = ('');
+                document.getElementById('input').value = ('');  
+                // Range les saisies dans les tableaux et repère une saisie centenaire
+                if (age < 20) {
+                    moins_vingt.push(age);
+                }
+                if (age >= 20 && age <= 40) {
+                    vingt_quarrante.push(age);
+                }
+                if (age > 40) {
+                    plus_quarrante.push(age);
+                }
+                if (age >= 100) {
+                    centenaire = true;
+                }
+                // Met à jour le label
+                age_nb++;
+                document.getElementById('label').innerHTML = 'Âge n°' + age_nb + ' :';
+            }
+        }
+
+        document.getElementById('button').addEventListener('click', function() {    // Fonction du button
+            age_check();    // Appel de la fonction
+            if (centenaire == true) { // En cas de centenaire
+                // Supprime les balise pour la saisie
+                document.getElementById('label').remove();
+                document.getElementById('input').remove();
+                document.getElementById('button').remove();
+                // Affiche le résultat
+                document.getElementById("moins_vingt").innerHTML = "Il y a " + moins_vingt.length + " personnes de moins de 20 ans.";
+                document.getElementById("vingt_quarrante").innerHTML = "Il y a " + vingt_quarrante.length + " personnes entre 20 et 40 ans.";
+                document.getElementById("plus_quarrante").innerHTML = "Il y a " + plus_quarrante.length + " personnes de plus de 40 ans.";
+                console.log(moins_vingt);
+                console.log(vingt_quarrante);
+                console.log(plus_quarrante);
+            }
+        });
+
+    </script>
+</body>
+</html>

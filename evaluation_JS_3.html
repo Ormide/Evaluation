@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluation_JS_3</title>
+</head>
+<body>
+    <!-- Affiche le tableau-->
+    <p id="table"></p>
+    <!-- Saisir des prénoms-->
+    <label for="prénom">Saisir un prénom </label><input id="prénom" value=""><button id="button" > Chercher</button>
+    <!-- Message prénom supprimer ou non -->
+    <p id="message"></p>
+
+    <script>
+        let tab = ["Audrey", "Aurélien", "Flavien", "Jérémy", "Laurent", "Melik", "Nouara", "Salem", "Samuel", "Stéphanie"];
+
+        document.getElementById('table').innerHTML = "[ " + tab.toString() + " ]";  // Affiche le tableau initial
+        document.getElementById('button').addEventListener('click', function() {    // Fonction du button
+            let prénom = document.getElementById('prénom').value;
+            let found = tab.indexOf(prénom);    // Postion du prénom saisie dans "tab"
+
+            if (found != -1) {  // Prénom trouvé
+                if (found == 0) {   // Si prénom en première position
+                    document.getElementById('message').innerHTML = "Le prénom \"" + prénom + "\" a été supprimer";
+                    tab.shift();
+                    tab.push(" ");
+                }
+                else {
+                document.getElementById('message').innerHTML = "Le prénom \"" + prénom + "\" a été supprimer";
+                tab.splice(found, 1);
+                tab.push(" ");
+                }
+            }
+            else {  // Prénom introuvable
+                document.getElementById('message').innerHTML = "Le prénom  \"" + prénom + "\" est absent du tableau";
+            }
+            document.getElementById('table').innerHTML = "[ " + tab.toString() + " ]";  // Affiche le tableau modifié
+        })
+    </script>
+</body>
+</html>
